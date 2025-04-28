@@ -1,0 +1,72 @@
+{
+  "nodes": [
+    {
+      "width": 300,
+      "height": 400,
+      "id": "chatInput",
+      "type": "chatInput",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "data": {
+        "chatHistory": true,
+        "systemMessage": "You are a helpful AI assistant."
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "llmNode",
+      "type": "llmNode",
+      "position": {
+        "x": 400,
+        "y": 0
+      },
+      "data": {
+        "model": "gpt-4",
+        "temperature": 0.7,
+        "maxTokens": 1000
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "outputParser",
+      "type": "outputParser",
+      "position": {
+        "x": 800,
+        "y": 0
+      },
+      "data": {
+        "format": "text"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "chatInput",
+      "sourceHandle": "output",
+      "target": "llmNode",
+      "targetHandle": "input",
+      "id": "edge1"
+    },
+    {
+      "source": "llmNode",
+      "sourceHandle": "output",
+      "target": "outputParser",
+      "targetHandle": "input",
+      "id": "edge2"
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 1
+  },
+  "metadata": {
+    "name": "Base Chatbot",
+    "description": "A simple chatbot template with chat history and system message.",
+    "version": "1.0.0"
+  }
+}

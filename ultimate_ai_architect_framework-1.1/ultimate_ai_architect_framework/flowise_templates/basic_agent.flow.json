@@ -1,0 +1,126 @@
+{
+  "nodes": [
+    {
+      "width": 300,
+      "height": 400,
+      "id": "chatInput",
+      "type": "chatInput",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "data": {
+        "chatHistory": true,
+        "systemMessage": "You are a helpful AI assistant that can use tools to accomplish tasks."
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "toolNode1",
+      "type": "toolNode",
+      "position": {
+        "x": 0,
+        "y": 500
+      },
+      "data": {
+        "name": "search",
+        "description": "Search the web for information",
+        "parameters": {
+          "query": {
+            "type": "string",
+            "description": "The search query"
+          }
+        }
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "toolNode2",
+      "type": "toolNode",
+      "position": {
+        "x": 400,
+        "y": 500
+      },
+      "data": {
+        "name": "calculator",
+        "description": "Perform mathematical calculations",
+        "parameters": {
+          "expression": {
+            "type": "string",
+            "description": "The mathematical expression to evaluate"
+          }
+        }
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "agentNode",
+      "type": "agentNode",
+      "position": {
+        "x": 400,
+        "y": 0
+      },
+      "data": {
+        "model": "gpt-4",
+        "temperature": 0.2,
+        "maxIterations": 10
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "outputParser",
+      "type": "outputParser",
+      "position": {
+        "x": 800,
+        "y": 0
+      },
+      "data": {
+        "format": "text"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "chatInput",
+      "sourceHandle": "output",
+      "target": "agentNode",
+      "targetHandle": "input",
+      "id": "edge1"
+    },
+    {
+      "source": "toolNode1",
+      "sourceHandle": "output",
+      "target": "agentNode",
+      "targetHandle": "tools",
+      "id": "edge2"
+    },
+    {
+      "source": "toolNode2",
+      "sourceHandle": "output",
+      "target": "agentNode",
+      "targetHandle": "tools",
+      "id": "edge3"
+    },
+    {
+      "source": "agentNode",
+      "sourceHandle": "output",
+      "target": "outputParser",
+      "targetHandle": "input",
+      "id": "edge4"
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 1
+  },
+  "metadata": {
+    "name": "Basic Agent",
+    "description": "A basic agent template with tool use capabilities.",
+    "version": "1.0.0"
+  }
+}

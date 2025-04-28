@@ -1,0 +1,36 @@
+tools:
+  web_search:
+    name: "Web Search Tool"
+    description: "Searches the web for information"
+    module: "tools.web_search.WebSearchTool"
+    config:
+      search_engine: "google"
+      max_results: 5
+  code_analyzer:
+    name: "Code Analyzer Tool"
+    description: "Analyzes code for quality, patterns, and issues"
+    module: "tools.code_analyzer.CodeAnalyzerTool"
+    config:
+      supported_languages: ["python", "javascript", "typescript", "java"]
+      max_file_size_kb: 1000
+  documentation_generator:
+    name: "Documentation Generator Tool"
+    description: "Generates documentation from code and specifications"
+    module: "tools.documentation_generator.DocumentationGeneratorTool"
+    config:
+      formats: ["markdown", "html", "pdf"]
+      include_diagrams: true
+  dependency_manager:
+    name: "Dependency Manager Tool"
+    description: "Manages project dependencies and requirements"
+    module: "tools.dependency_manager.DependencyManagerTool"
+    config:
+      package_managers: ["pip", "npm", "maven"]
+      check_vulnerabilities: true
+  markdown_processor:
+    name: "Markdown Processor Tool"
+    description: "Processes and transforms markdown content"
+    module: "tools.markdown_processor.MarkdownProcessorTool"
+    config:
+      extensions: ["tables", "fenced_code", "toc"]
+      output_formats: ["html", "pdf"]

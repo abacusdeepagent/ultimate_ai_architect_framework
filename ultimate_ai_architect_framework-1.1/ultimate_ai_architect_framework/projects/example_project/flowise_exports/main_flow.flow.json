@@ -1,0 +1,255 @@
+{
+  "nodes": [
+    {
+      "width": 300,
+      "height": 400,
+      "id": "chatInput",
+      "type": "chatInput",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "data": {
+        "chatHistory": true,
+        "systemMessage": "You are a helpful AI assistant for the Example Project. You can answer questions about documents and help with document analysis."
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "documentLoader",
+      "type": "documentLoader",
+      "position": {
+        "x": 0,
+        "y": 500
+      },
+      "data": {
+        "type": "text",
+        "source": "documents"
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "textSplitter",
+      "type": "textSplitter",
+      "position": {
+        "x": 400,
+        "y": 500
+      },
+      "data": {
+        "chunkSize": 1000,
+        "chunkOverlap": 200
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "embeddings",
+      "type": "embeddings",
+      "position": {
+        "x": 800,
+        "y": 500
+      },
+      "data": {
+        "model": "text-embedding-ada-002"
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "vectorStore",
+      "type": "vectorStore",
+      "position": {
+        "x": 1200,
+        "y": 500
+      },
+      "data": {
+        "type": "chroma"
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "retriever",
+      "type": "retriever",
+      "position": {
+        "x": 400,
+        "y": 200
+      },
+      "data": {
+        "k": 3
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "toolNode1",
+      "type": "toolNode",
+      "position": {
+        "x": 0,
+        "y": 800
+      },
+      "data": {
+        "name": "document_processor",
+        "description": "Process and analyze documents",
+        "parameters": {
+          "document_path": {
+            "type": "string",
+            "description": "Path to the document to process"
+          }
+        }
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "toolNode2",
+      "type": "toolNode",
+      "position": {
+        "x": 400,
+        "y": 800
+      },
+      "data": {
+        "name": "search",
+        "description": "Search for information",
+        "parameters": {
+          "query": {
+            "type": "string",
+            "description": "The search query"
+          }
+        }
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "promptTemplate",
+      "type": "promptTemplate",
+      "position": {
+        "x": 800,
+        "y": 200
+      },
+      "data": {
+        "template": "Answer the question based on the context below. If the context doesn't contain the answer, say that you don't know and suggest using a tool to find the information.\n\nContext: {context}\n\nQuestion: {question}\n\nAnswer:"
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "agentNode",
+      "type": "agentNode",
+      "position": {
+        "x": 1200,
+        "y": 200
+      },
+      "data": {
+        "model": "gpt-4",
+        "temperature": 0.3,
+        "maxIterations": 5
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "outputParser",
+      "type": "outputParser",
+      "position": {
+        "x": 1600,
+        "y": 200
+      },
+      "data": {
+        "format": "text"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "documentLoader",
+      "sourceHandle": "output",
+      "target": "textSplitter",
+      "targetHandle": "input",
+      "id": "edge1"
+    },
+    {
+      "source": "textSplitter",
+      "sourceHandle": "output",
+      "target": "embeddings",
+      "targetHandle": "input",
+      "id": "edge2"
+    },
+    {
+      "source": "embeddings",
+      "sourceHandle": "output",
+      "target": "vectorStore",
+      "targetHandle": "input",
+      "id": "edge3"
+    },
+    {
+      "source": "vectorStore",
+      "sourceHandle": "output",
+      "target": "retriever",
+      "targetHandle": "vectorStore",
+      "id": "edge4"
+    },
+    {
+      "source": "chatInput",
+      "sourceHandle": "output",
+      "target": "retriever",
+      "targetHandle": "query",
+      "id": "edge5"
+    },
+    {
+      "source": "retriever",
+      "sourceHandle": "output",
+      "target": "promptTemplate",
+      "targetHandle": "context",
+      "id": "edge6"
+    },
+    {
+      "source": "chatInput",
+      "sourceHandle": "output",
+      "target": "promptTemplate",
+      "targetHandle": "question",
+      "id": "edge7"
+    },
+    {
+      "source": "promptTemplate",
+      "sourceHandle": "output",
+      "target": "agentNode",
+      "targetHandle": "input",
+      "id": "edge8"
+    },
+    {
+      "source": "toolNode1",
+      "sourceHandle": "output",
+      "target": "agentNode",
+      "targetHandle": "tools",
+      "id": "edge9"
+    },
+    {
+      "source": "toolNode2",
+      "sourceHandle": "output",
+      "target": "agentNode",
+      "targetHandle": "tools",
+      "id": "edge10"
+    },
+    {
+      "source": "agentNode",
+      "sourceHandle": "output",
+      "target": "outputParser",
+      "targetHandle": "input",
+      "id": "edge11"
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 1
+  },
+  "metadata": {
+    "name": "Example Project Main Flow",
+    "description": "Main flow for the Example Project, combining RAG and agent capabilities.",
+    "version": "1.0.0"
+  }
+}

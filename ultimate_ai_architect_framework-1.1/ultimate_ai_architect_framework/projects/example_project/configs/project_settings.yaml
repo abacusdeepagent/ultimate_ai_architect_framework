@@ -1,0 +1,24 @@
+# Example Project Settings
+name: "example_project"
+description: "An example project to demonstrate the Ultimate AI Architect Framework"
+version: "0.1.0"
+created: "2025-04-25T00:00:00Z"
+status: "development"
+
+# Project-specific settings
+settings:
+  max_tokens: 2000
+  temperature: 0.3
+  model: "gpt-4"
+  
+# Project features
+features:
+  - "question_answering"
+  - "document_analysis"
+  - "knowledge_base"
+  
+# Project dependencies
+dependencies:
+  - "langchain"
+  - "chromadb"
+  - "openai"

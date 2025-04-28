@@ -1,0 +1,37 @@
+agents:
+  strategy_advisor:
+    name: "Framework Strategy Advisor"
+    description: "Analyzes project requirements and provides strategic advice on architectural decisions"
+    allowed_tools: ["web_search", "code_analyzer", "documentation_generator"]
+    memory:
+      type: "simple"
+      max_items: 10
+    llm:
+      provider: "openrouter"
+      model: "anthropic/claude-3-opus"
+      temperature: 0.2
+      max_tokens: 2000
+  code_generator:
+    name: "Code Generator"
+    description: "Generates code based on specifications and requirements"
+    allowed_tools: ["code_analyzer", "documentation_generator", "dependency_manager"]
+    memory:
+      type: "conversation"
+      max_items: 20
+    llm:
+      provider: "openrouter"
+      model: "anthropic/claude-3-sonnet"
+      temperature: 0.1
+      max_tokens: 4000
+  documentation_writer:
+    name: "Documentation Writer"
+    description: "Creates comprehensive documentation for code and architecture"
+    allowed_tools: ["code_analyzer", "documentation_generator", "markdown_processor"]
+    memory:
+      type: "simple"
+      max_items: 10
+    llm:
+      provider: "openrouter"
+      model: "anthropic/claude-3-haiku"
+      temperature: 0.3
+      max_tokens: 3000

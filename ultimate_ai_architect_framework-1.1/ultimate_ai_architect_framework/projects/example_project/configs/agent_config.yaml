@@ -1,0 +1,21 @@
+# Example Project Agent Configuration
+agents:
+  # Primary project agent
+  primary:
+    type: "built_in.framework_strategy_advisor"
+    config:
+      name: "Example Project Advisor"
+      description: "Strategic advisor for the example project"
+      model: "gpt-4"
+      temperature: 0.2
+      
+  # Document processor agent
+  document_processor:
+    type: "custom.document_processor"
+    config:
+      name: "Document Processor"
+      description: "Processes and analyzes documents"
+      model: "gpt-4"
+      temperature: 0.1
+      chunk_size: 1000
+      chunk_overlap: 200

@@ -1,0 +1,40 @@
+version: "1.0.0"
+logging:
+  level: "INFO"
+paths:
+  projects_dir: "projects/"
+  data_dir: "data/"
+  models_dir: "models/"
+  tools_dir: "tools/"
+services:
+  openai:
+    api_key: "${OPENAI_API_KEY}"
+  google:
+    api_key: "${GOOGLE_API_KEY}"
+  anthropic:
+    api_key: "${ANTHROPIC_API_KEY}"
+llm:
+  default_provider: "openrouter"
+  providers:
+    openrouter:
+      api_key: "${OPENROUTER_API_KEY}"
+      api_base: "https://openrouter.ai/api/v1"
+      default_model: "anthropic/claude-3-haiku"
+      models:
+        reasoning: "anthropic/claude-3-opus"
+        generation: "anthropic/claude-3-sonnet"
+        summarization: "anthropic/claude-3-haiku"
+    google:
+      api_key: "${GOOGLE_API_KEY}"
+      default_model: "gemini-pro"
+      models:
+        reasoning: "gemini-pro"
+        generation: "gemini-pro"
+        summarization: "gemini-pro"
+    anthropic:
+      api_key: "${ANTHROPIC_API_KEY}"
+      default_model: "claude-3-haiku"
+      models:
+        reasoning: "claude-3-opus"
+        generation: "claude-3-sonnet"
+        summarization: "claude-3-haiku"

@@ -1,0 +1,201 @@
+{
+  "nodes": [
+    {
+      "width": 300,
+      "height": 400,
+      "id": "chatInput",
+      "type": "chatInput",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "data": {
+        "chatHistory": true,
+        "systemMessage": "You are a helpful AI assistant that answers questions based on the provided context."
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "documentLoader",
+      "type": "documentLoader",
+      "position": {
+        "x": 0,
+        "y": 500
+      },
+      "data": {
+        "type": "text",
+        "source": "documents"
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "textSplitter",
+      "type": "textSplitter",
+      "position": {
+        "x": 400,
+        "y": 500
+      },
+      "data": {
+        "chunkSize": 1000,
+        "chunkOverlap": 200
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "embeddings",
+      "type": "embeddings",
+      "position": {
+        "x": 800,
+        "y": 500
+      },
+      "data": {
+        "model": "text-embedding-ada-002"
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "vectorStore",
+      "type": "vectorStore",
+      "position": {
+        "x": 1200,
+        "y": 500
+      },
+      "data": {
+        "type": "chroma"
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "retriever",
+      "type": "retriever",
+      "position": {
+        "x": 400,
+        "y": 200
+      },
+      "data": {
+        "k": 3
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "promptTemplate",
+      "type": "promptTemplate",
+      "position": {
+        "x": 800,
+        "y": 200
+      },
+      "data": {
+        "template": "Answer the question based on the context below.\n\nContext: {context}\n\nQuestion: {question}\n\nAnswer:"
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "llmNode",
+      "type": "llmNode",
+      "position": {
+        "x": 1200,
+        "y": 200
+      },
+      "data": {
+        "model": "gpt-4",
+        "temperature": 0.3,
+        "maxTokens": 1000
+      }
+    },
+    {
+      "width": 300,
+      "height": 400,
+      "id": "outputParser",
+      "type": "outputParser",
+      "position": {
+        "x": 1600,
+        "y": 200
+      },
+      "data": {
+        "format": "text"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "documentLoader",
+      "sourceHandle": "output",
+      "target": "textSplitter",
+      "targetHandle": "input",
+      "id": "edge1"
+    },
+    {
+      "source": "textSplitter",
+      "sourceHandle": "output",
+      "target": "embeddings",
+      "targetHandle": "input",
+      "id": "edge2"
+    },
+    {
+      "source": "embeddings",
+      "sourceHandle": "output",
+      "target": "vectorStore",
+      "targetHandle": "input",
+      "id": "edge3"
+    },
+    {
+      "source": "vectorStore",
+      "sourceHandle": "output",
+      "target": "retriever",
+      "targetHandle": "vectorStore",
+      "id": "edge4"
+    },
+    {
+      "source": "chatInput",
+      "sourceHandle": "output",
+      "target": "retriever",
+      "targetHandle": "query",
+      "id": "edge5"
+    },
+    {
+      "source": "retriever",
+      "sourceHandle": "output",
+      "target": "promptTemplate",
+      "targetHandle": "context",
+      "id": "edge6"
+    },
+    {
+      "source": "chatInput",
+      "sourceHandle": "output",
+      "target": "promptTemplate",
+      "targetHandle": "question",
+      "id": "edge7"
+    },
+    {
+      "source": "promptTemplate",
+      "sourceHandle": "output",
+      "target": "llmNode",
+      "targetHandle": "input",
+      "id": "edge8"
+    },
+    {
+      "source": "llmNode",
+      "sourceHandle": "output",
+      "target": "outputParser",
+      "targetHandle": "input",
+      "id": "edge9"
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 1
+  },
+  "metadata": {
+    "name": "Basic RAG",
+    "description": "A basic Retrieval-Augmented Generation (RAG) template for question answering over documents.",
+    "version": "1.0.0"
+  }
+}
